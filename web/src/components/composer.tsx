@@ -2,7 +2,7 @@ import { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useStat
 import { createPortal } from "react-dom";
 import type { ChangeEvent, ClipboardEvent, CSSProperties, MouseEvent, ReactNode } from "react";
 import { useRevalidator } from "react-router";
-import { Check, FileText, Image, Keyboard, ListEnd, ListTodo, Loader2, Mic, Monitor, Navigation, Paperclip, Pencil, Send, Settings2, Slash, Square, Terminal, TriangleAlert, X, Zap } from "lucide-react";
+import { Check, FileText, Image, Keyboard, ListEnd, ListTodo, Loader2, Mic, Monitor, Navigation, Paperclip, Pencil, Send, Settings2, Slash, Square, Terminal, TriangleAlert, X } from "lucide-react";
 
 import { StatusDot } from "@/components/status-badge";
 import { applyDraftFontSize, fontStack, inputFocusZoomsPage, reportOfferOf, sentSuggestionsOf } from "@/hooks/use-display-prefs";
@@ -2584,15 +2584,9 @@ export const Composer = forwardRef<ComposerHandle, ComposerProps>(function Compo
                   direct.activate();
                 },
               },
-              {
-                id: "quick",
-                icon: Zap,
-                label: translate("composer.controls.quick"),
-                on: drawer === "quick",
-                expanded: drawer === "quick",
-                disabled: locked,
-                onSelect: () => requestDrawer(drawer === "quick" ? null : "quick"),
-              },
+              // Quick is left off this belt in this fork: the operator found its phrases unhelpful
+              // and wanted the room. The dock itself is untouched, so restoring the entry is the
+              // whole revert.
               // Sent (M61): the shell lines sent through Collie, on a shell pane only. The bridge's own
               // `kind` decides that (`isShell`); no list of harness names lives in the web.
               ...(isShell
