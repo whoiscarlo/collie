@@ -3075,7 +3075,16 @@ describe("Composer — keys dock (in-flow, not an overlay)", () => {
   });
 });
 
-describe("Composer — quick dock (in-flow, matches the keys dock)", () => {
+describe("Composer — fork: no Quick button", () => {
+  it("the belt carries no Quick button", () => {
+    renderComposer();
+    expect(screen.queryByRole("button", { name: "Quick" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /keys/i })).toBeInTheDocument();
+  });
+});
+
+// Fork: the Quick entry is off the belt, so these dock tests have nothing to tap.
+describe.skip("Composer — quick dock (in-flow, matches the keys dock)", () => {
   it("tapping Quick docks the reply grids in the normal flow (no fixed overlay) and toggles it closed", async () => {
     const user = userEvent.setup();
     renderComposer();
@@ -3284,7 +3293,6 @@ describe("Composer — a composed key queue is guarded on the way out", () => {
 
   it.each([
     ["the Keys toggle", () => controlsToggle("Keys")],
-    ["the Quick toggle", () => controlsToggle("Quick")],
     ["the Display gear", () => screen.getByRole("button", { name: "Display settings" })],
   ])("%s also needs a second tap while keys are staged", async (_label, getButton) => {
     const user = userEvent.setup();
@@ -3337,7 +3345,8 @@ describe("Composer — a composed key queue is guarded on the way out", () => {
   });
 });
 
-describe("Composer — quick replies follow the pane kind", () => {
+// Fork: the Quick entry is off the belt, so these dock tests have nothing to tap.
+describe.skip("Composer — quick replies follow the pane kind", () => {
   it("an agent pane gets the agent set", async () => {
     const user = userEvent.setup();
     renderComposer({ agent: "claude", isShell: false });
@@ -6498,11 +6507,11 @@ describe("the unread card (M102 spec 03)", () => {
   it("unread card: a new screen never takes over a drawer the person has open", async () => {
     const user = userEvent.setup();
     const { move } = renderUnread(null);
-    await user.click(screen.getByRole("button", { name: "Quick" }));
-    expect(screen.getByRole("button", { name: "Quick" })).toHaveAttribute("aria-expanded", "true");
+    // Fork: the Quick button is off the belt, so the Keys drawer stands in for "a drawer the person has open".
+    await user.click(screen.getByRole("button", { name: "Keys" }));
+    expect(screen.getByRole("button", { name: "Keys" })).toHaveAttribute("aria-expanded", "true");
     move("screen-a");
-    expect(screen.getByRole("button", { name: "Quick" })).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("button", { name: "Keys" })).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "Keys" })).toHaveAttribute("aria-expanded", "true");
   });
 
   it("unread card: Send past this screen reads the screen once, then the next send carries its rows hash with override", async () => {

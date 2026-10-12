@@ -4124,15 +4124,9 @@ export const Composer = forwardRef<ComposerHandle, ComposerProps>(function Compo
                   requestDrawer(null);
                 },
               },
-              {
-                id: "quick",
-                icon: "quick-actions",
-                label: translate("composer.controls.quick"),
-                on: drawer === "quick",
-                expanded: drawer === "quick",
-                disabled: locked,
-                onSelect: () => requestDrawer(drawer === "quick" ? null : "quick"),
-              },
+              // Quick is left off this belt in this fork: the operator found its phrases unhelpful
+              // and wanted the room. The dock itself is untouched, so restoring the entry is the
+              // whole revert.
               // Sent (M61): the shell lines sent through Collie, on a shell pane only. The bridge's own
               // `kind` decides that (`isShell`); no list of harness names lives in the web.
               ...(isShell
